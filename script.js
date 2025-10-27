@@ -34,7 +34,7 @@ function spawnCloud(initial = false) {
   // Random stagger and opacity peak
   const delay = initial ? -Math.random() * 10 : 0;
   cloud.style.setProperty('--delay', `${delay}s`);
-  const opacityPeak = 0.65 + Math.random() * 0.2; // 0.65–0.85
+  const opacityPeak = 0.5 + Math.random() * 0.2;
   cloud.style.setProperty('--opacity-peak', opacityPeak.toFixed(2));
   
   cloud.style.width = `${window.innerWidth}px`;
