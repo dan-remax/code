@@ -2,6 +2,7 @@
 const chatEl = document.getElementById('chat');
 const inputEl = document.getElementById('input');
 const sendBtn = document.getElementById('sendBtn');
+const appEl = document.querySelector('.app');
 
 const SETTINGS = {
 	streaming: true,
@@ -99,37 +100,44 @@ async function streamIntoBubble(bubble, text) {
 	}
 }
 
+
 async function handleSend() {
-	const text = inputEl.value.trim();
-	if (!text) return;
-	inputEl.value = '';
-	inputEl.style.height = '52px';
-	sendBtn.disabled = true;
+  const text = inputEl.value.trim();
+  if (!text) return;
 
-	addMessage('user', text);
+  // If we were in centered state, return to normal layout
+  if (appEl.classList.contains('centered')) {
+    appEl.classList.remove('centered');
+  }
 
-	// Show typing indicator
-	const typing = addTyping();
+  inputEl.value = '';
+  inputEl.style.height = '64px';
+  sendBtn.disabled = true;
 
-	// Simulate latency
-	await new Promise(r => setTimeout(r, 500 + Math.random() * 600));
+  addMessage('user', text);
 
-	const reply = generateDummyResponse(text);
+  // Show typing indicator
+  const typing = addTyping();
 
-	if (SETTINGS.streaming) {
-		await streamIntoBubble(typing.bubble, reply);
-	} else {
-		typing.bubble.textContent = reply;
-	}
+  // Simulate latency
+  await new Promise(r => setTimeout(r, 500 + Math.random() * 600));
 
-	// Replace typing indicator "message" with a proper assistant message in state
-	typing.wrap.remove();
-	addMessage('assistant', reply);
+  const reply = generateDummyResponse(text);
 
-	sendBtn.disabled = false;
-	inputEl.focus();
+  if (SETTINGS.streaming) {
+    await streamIntoBubble(typing.bubble, reply);
+  } else {
+    typing.bubble.textContent = reply;
+  }
+
+  // Replace typing indicator "message" with a proper assistant message in state
+  typing.wrap.remove();
+  addMessage('assistant', reply);
+
+  sendBtn.disabled = false;
+  inputEl.focus();
 }
-
+``
 // --- Events ---
 sendBtn.addEventListener('click', handleSend);
 
@@ -155,13 +163,16 @@ clearBtn.addEventListener('click', () => {
 
 
 
-// --- Init ---
+
 (function init() {
-	messages = load();
-	if (messages.length === 0) {
-		addMessage('assistant', 'Hi! Ask me anything. This is a simple demo with dummy responses.');
-	} else {
-		render();
-	}
-	inputEl.focus();
+  messages = load();
+  if (messages.length === 0) {
+    // Center the composer on first load
+    appEl.classList.add('centered');
+    addMessage('assistant', 'Hi! Ask me anything. This is a simple demo with dummy responses.');
+  } else {
+    appEl.classList.remove('centered');
+    render();
+  }
+  inputEl.focus();
 })();

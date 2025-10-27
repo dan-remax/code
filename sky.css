@@ -9,8 +9,6 @@ body, html {
   perspective-origin: center 40%;
 }
 
-
-
 #cloud-container {
   position: relative;
   display: flex;
