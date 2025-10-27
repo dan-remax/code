@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Flying Through Clouds</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="sky.css">
+  <link rel="stylesheet" href="chat.css">
 </head>
+
 <body>
   <div id="cloud-container">
-<div class="header"><img src="img/logo-white.svg" alt="Sky Studio"></div>
+    <div class="header"><img src="img/logo-white.svg" alt="Sky Studio"></div>
+    <div class="app">
+      <header>
+        <div class="title"><span class="dot" aria-hidden="true"></span> Simple Chat</div>
+        <div class="controls">
+          <button id="copyBtn" class="icon" title="Copy chat">Copy</button>
+          <button id="clearBtn" class="icon" title="Clear chat">Clear</button>
+        </div>
+      </header>
+
+      <main id="chat" class="chat" aria-live="polite" aria-label="Chat history">
+        <!-- Messages will render here -->
+      </main>
+
+      <section class="composer" aria-label="Message composer">
+        <textarea id="input" placeholder="Send a message… (Shift+Enter for newline)" rows="1"></textarea>
+        <button id="sendBtn" class="send">Send ⮚</button>
+        <div class="hint">Press <b>Enter</b> to send • <b>Shift+Enter</b> for newline</div>
+      </section>
+    </div>
+
 
   </div>
-  <script src="script.js"></script>
+  <script src="sky.js"></script>
+  <script src="chat.js"></script>
 </body>
+
 </html>
