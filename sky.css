@@ -2,18 +2,13 @@ body, html {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: radial-gradient(circle at center bottom,#ffffff,transparent 75%),linear-gradient(to bottom, #28bafd, #80d7ff 15%, #ffffff 90%);
+  background: radial-gradient(at center bottom,#ffffff,transparent 80%),linear-gradient(to bottom, #28bafd, #80d7ff 15%, #ffffff 90%);
   height: 100vh;
   width: 100vw;
   perspective: 1000px;
   perspective-origin: center 40%;
 }
 
-
-.header img{
-padding: 1rem;
-max-width: 180px;
-}
 
 
 #cloud-container {

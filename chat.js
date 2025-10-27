@@ -1,15 +1,12 @@
-
 // --- Simple Chat State ---
 const chatEl = document.getElementById('chat');
 const inputEl = document.getElementById('input');
 const sendBtn = document.getElementById('sendBtn');
-const clearBtn = document.getElementById('clearBtn');
-const copyBtn = document.getElementById('copyBtn');
 
 const SETTINGS = {
 	streaming: true,
 	persist: true,
-	typingDelayMsPerChar: 12,
+	typingDelayMsPerChar: 4,
 	maxHistory: 200
 };
 
@@ -36,11 +33,7 @@ function scrollToBottom() {
 function createMessageNode(role, content, isTyping = false) {
 	const wrap = document.createElement('div');
 	wrap.className = `msg ${role}`;
-
-	const avatar = document.createElement('div');
-	avatar.className = `avatar ${role === 'user' ? 'user' : 'bot'}`;
-	avatar.textContent = role === 'user' ? 'U' : 'AI';
-
+	
 	const bubble = document.createElement('div');
 	bubble.className = 'bubble';
 
@@ -52,8 +45,7 @@ function createMessageNode(role, content, isTyping = false) {
 	} else {
 		bubble.textContent = content;
 	}
-
-	wrap.appendChild(avatar);
+	
 	wrap.appendChild(bubble);
 	return { wrap, bubble };
 }
@@ -87,9 +79,9 @@ function addTyping() {
 // Simulated "model" response (dummy content)
 function generateDummyResponse(userText) {
 	const templates = [
-		`You said: "${userText}". Here's a concise response with a friendly tone. (Dummy content)`,
+		`You said: "${userText}". Here's a concise response with a friendly tone. (Soluta possimus asperiores. Assumenda facilis rerum sunt debitis natus perspiciatis. Dicta aut rem inventore quia velit officiis quia. Nulla iusto nihil omnis dolores et illum eos dolore. Ex quas harum autem libero illum. Dignissimos rerum quo officiis. Sapiente adipisci veritatis non consequatur doloribus. Omnis nihil dolores odit sapiente doloremque. Ut facere sunt recusandae saepe nisi perferendis doloremque porro. Ad ut amet. Voluptatem excepturi sunt omnis excepturi cumque voluptates. Quis laborum laborum ea ducimus nemo tenetur aut. Fugit autem quia reiciendis inventore. Consequatur sint quaerat. Omnis quisquam et vel quis perspiciatis provident perspiciatis et.)`,
 		`Great question! If we break it down:\n• Point 1\n• Point 2\n• Point 3\n\nLet me know where to go deeper. (Dummy)`,
-		`Quick summary: [placeholder]\n\nDetails: This is a mock reply to demonstrate UI streaming and formatting.`,
+		`Quick summary: [placeholder]\n\nDetails: This is a mock reply. Soluta possimus asperiores. Assumenda facilis rerum sunt debitis natus perspiciatis. Dicta aut rem inventore quia velit officiis quia. Nulla iusto nihil omnis dolores et illum eos dolore. Ex quas harum autem libero illum. Dignissimos rerum quo officiis. Sapiente adipisci veritatis non consequatur doloribus. Omnis nihil dolores odit sapiente doloremque. Ut facere sunt recusandae saepe nisi perferendis doloremque porro. Ad ut amet. Voluptatem excepturi sunt omnis excepturi cumque voluptates. Quis laborum laborum ea ducimus nemo tenetur aut. Fugit autem quia reiciendis inventore. Consequatur sint quaerat. Omnis quisquam et vel quis perspiciatis provident perspiciatis et.`,
 		`Here's a short answer, followed by a tip: Always structure outputs for readability. (Sample text)`,
 		`Thanks for the message! This response is generated locally and not calling any API.`
 	];
@@ -161,17 +153,7 @@ clearBtn.addEventListener('click', () => {
 	render();
 });
 
-copyBtn.addEventListener('click', async () => {
-	const lines = messages.map(m => (m.role === 'user' ? 'You: ' : 'AI: ') + m.content);
-	const text = lines.join('\n\n');
-	try {
-		await navigator.clipboard.writeText(text);
-		copyBtn.textContent = 'Copied!';
-		setTimeout(() => copyBtn.textContent = 'Copy', 1200);
-	} catch {
-		alert('Copy failed. Your browser may block clipboard access.');
-	}
-});
+
 
 // --- Init ---
 (function init() {
