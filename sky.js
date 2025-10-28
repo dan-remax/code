@@ -1,21 +1,21 @@
 const cloudContainer = document.getElementById('cloud-container');
-const cloudImages = ['img/webp/1.webp', 'img/webp/2.webp', 'img/webp/3.webp', 'img/webp/4.webp', 'img/webp/5.webp',
-  'img/webp/6.webp', 'img/webp/7.webp', 'img/webp/8.webp', 'img/webp/9.webp', 'img/webp/10.webp',
-  'img/webp/11.webp', 'img/webp/12.webp'];
+const cloudImages = ['img/webp/1.webp', 'img/webp/2.webp', 'img/webp/3.webp', 'img/webp/4.webp', 'img/webp/5.webp', 'img/webp/6.webp', 'img/webp/7.webp', 'img/webp/8.webp', 'img/webp/9.webp', 'img/webp/10.webp', 'img/webp/11.webp', 'img/webp/12.webp'];
 
 function spawnCloud(initial = false) {
   const cloud = document.createElement('img');
   cloud.src = cloudImages[Math.floor(Math.random() * cloudImages.length)];
   cloud.className = 'cloud';
-
+  
+  // Spread clouds apart by placing half on left and half on right
   const leftHalf = Math.random() < 0.5;
-  const left = leftHalf
-    ? Math.random() * (window.innerWidth / 2) - (window.innerWidth * 2 / 3)
-    : Math.random() * (window.innerWidth / 2) + (window.innerWidth / 3);
+  const leftPct = leftHalf
+    ? Math.random() * 50 - 67 //start point between -67% and -17%
+    : Math.random() * 50 + 33  //start point between 33% and -83%
 
+  // Place clouds vertically in last 
   const topPct = 20 + Math.random() * 80; 
   cloud.style.setProperty('--top', `${topPct}%`);
-  cloud.style.setProperty('--left', `${left}px`);
+  cloud.style.setProperty('--left', `${leftPct}%`);
 
   // Depth: farther away starts more negative Z
   const zStart = -2000 + Math.random() * 1000; 
@@ -37,8 +37,7 @@ function spawnCloud(initial = false) {
   const opacityPeak = 0.5 + Math.random() * 0.2;
   cloud.style.setProperty('--opacity-peak', opacityPeak.toFixed(2));
   
-  cloud.style.width = `${window.innerWidth}px`;
-  
+  cloud.style.width = `100%`;
   cloudContainer.appendChild(cloud);
   
   const life = Math.max(0, duration + Math.max(0, delay) + 1) * 1000;

@@ -77,7 +77,7 @@ function addTyping() {
 	return { wrap, bubble };
 }
 
-// Simulated "model" response (dummy content)
+
 function generateDummyResponse(userText) {
 	const templates = [
 		`You said: "${userText}". Here's a concise response with a friendly tone. (Soluta possimus asperiores. Assumenda facilis rerum sunt debitis natus perspiciatis. Dicta aut rem inventore quia velit officiis quia. Nulla iusto nihil omnis dolores et illum eos dolore. Ex quas harum autem libero illum. Dignissimos rerum quo officiis. Sapiente adipisci veritatis non consequatur doloribus. Omnis nihil dolores odit sapiente doloremque. Ut facere sunt recusandae saepe nisi perferendis doloremque porro. Ad ut amet. Voluptatem excepturi sunt omnis excepturi cumque voluptates. Quis laborum laborum ea ducimus nemo tenetur aut. Fugit autem quia reiciendis inventore. Consequatur sint quaerat. Omnis quisquam et vel quis perspiciatis provident perspiciatis et.)`,
