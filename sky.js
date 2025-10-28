@@ -42,10 +42,6 @@ function spawnCloud(initial = false) {
   const opacityPeak = 0.3 + Math.random() * 0.5;
   cloud.style.setProperty('--opacity-peak', opacityPeak.toFixed(2));
 
-  // Optional size variety (comment out if not desired)
-  // const scale = 0.7 + Math.random() * 0.6;
-  // cloud.style.setProperty('--scale', scale.toFixed(2));
-
   cloudContainer.appendChild(cloud);
 
   // Clean up when the animation actually ends
