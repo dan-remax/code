@@ -1,53 +1,119 @@
 const cloudContainer = document.getElementById('cloud-container');
-const cloudImages = ['img/webp/1.webp', 'img/webp/2.webp', 'img/webp/3.webp', 'img/webp/4.webp', 'img/webp/5.webp', 'img/webp/6.webp', 'img/webp/7.webp', 'img/webp/8.webp', 'img/webp/9.webp', 'img/webp/10.webp', 'img/webp/11.webp', 'img/webp/12.webp'];
+const cloudImages = [
+  'img/webp/1.webp','img/webp/2.webp','img/webp/3.webp','img/webp/4.webp',
+  'img/webp/5.webp','img/webp/6.webp','img/webp/7.webp','img/webp/8.webp',
+  'img/webp/9.webp','img/webp/10.webp','img/webp/11.webp','img/webp/12.webp'
+];
 
 function spawnCloud(initial = false) {
   const cloud = document.createElement('img');
   cloud.src = cloudImages[Math.floor(Math.random() * cloudImages.length)];
   cloud.className = 'cloud';
-  
-  // Spread clouds apart by placing half on left and half on right
+  cloud.decoding = 'async';
+  cloud.loading = 'lazy';
+
+  // Left vs right start
   const leftHalf = Math.random() < 0.5;
   const leftPct = leftHalf
-    ? Math.random() * 50 - 67 //start point between -67% and -17%
-    : Math.random() * 50 + 33  //start point between 33% and -83%
+    ? Math.random() * 50 - 75 // start between -67% and -17%
+    : Math.random() * 50 + 50; // start between 33% and 83%
 
-  // Place clouds vertically in last 
-  const topPct = 20 + Math.random() * 80; 
+  // Vertical placement
+  const topPct = 20 + Math.random() * 80;
   cloud.style.setProperty('--top', `${topPct}%`);
   cloud.style.setProperty('--left', `${leftPct}%`);
 
-  // Depth: farther away starts more negative Z
-  const zStart = -2000 + Math.random() * 1000; 
+  // Depth & drift
+  const zStart = -2000 + Math.random() * 1000;
+  cloud.style.setProperty('width', `100%`);
   cloud.style.setProperty('--z-start', `${zStart}px`);
-
-  // Slight drift across flight so paths aren't dead straight
-  const driftXPct = (Math.random() - 0.5) * 20; 
+  const driftXPct = (Math.random() - 0.5) * 20;
   cloud.style.setProperty('--drift-x', `${driftXPct}%`);
 
-  // Duration scales a bit with depth so farther clouds take longer
-  const baseDuration = 12;              // seconds
+  // Duration scaled by depth
+  const baseDuration = 12; // seconds
   const depthFactor = 1 + (Math.abs(zStart) / 2000) * 0.5; // 1..1.5x
   const duration = (baseDuration + Math.random() * 4) * depthFactor;
   cloud.style.setProperty('--duration', `${duration.toFixed(2)}s`);
 
-  // Random stagger and opacity peak
+  // Delay & opacity
   const delay = initial ? -Math.random() * 10 : 0;
   cloud.style.setProperty('--delay', `${delay}s`);
-  const opacityPeak = 0.5 + Math.random() * 0.2;
+  const opacityPeak = 0.3 + Math.random() * 0.5;
   cloud.style.setProperty('--opacity-peak', opacityPeak.toFixed(2));
-  
-  cloud.style.width = `100%`;
+
+  // Optional size variety (comment out if not desired)
+  // const scale = 0.7 + Math.random() * 0.6;
+  // cloud.style.setProperty('--scale', scale.toFixed(2));
+
   cloudContainer.appendChild(cloud);
-  
-  const life = Math.max(0, duration + Math.max(0, delay) + 1) * 1000;
-  setTimeout(() => cloud.remove(), life);
+
+  // Clean up when the animation actually ends
+  const onDone = () => {
+    cloud.removeEventListener('animationend', onDone);
+    cloud.removeEventListener('animationcancel', onDone);
+    cloud.remove();
+  };
+  cloud.addEventListener('animationend', onDone);
+  cloud.addEventListener('animationcancel', onDone);
 }
 
-// Spawn initial clouds
-for (let i = 0; i < 12; i++) {
-  spawnCloud(true);
+// RAF scheduler (pauses when hidden)
+let rafId = null;
+let last = 0;
+let accumulator = 0;
+const spawnEveryMs = 1000;
+
+function tick(ts) {
+  if (!last) last = ts;
+  const dt = ts - last;
+  last = ts;
+  accumulator += dt;
+
+  while (accumulator >= spawnEveryMs) {
+    spawnCloud();
+    accumulator -= spawnEveryMs;
+  }
+  rafId = requestAnimationFrame(tick);
 }
 
-// Loop clouds
-setInterval(spawnCloud, 1000);
+function start() {
+  if (rafId != null) return;    // already running
+  last = 0;                     // reset time base to avoid jumps
+  rafId = requestAnimationFrame(tick);
+}
+
+function stop() {
+  if (rafId == null) return;
+  cancelAnimationFrame(rafId);
+  rafId = null;
+}
+
+// Initial burst + start
+function seedInitial() {
+  for (let i = 0; i < 16; i++) spawnCloud(true);
+}
+seedInitial();
+start();
+
+// Smooth pause/resume on visibility changes
+function pauseVisuals() {
+  cloudContainer.classList.add('paused'); // pauses CSS animations
+  stop();                                  // stops spawning
+}
+function resumeVisuals() {
+  cloudContainer.classList.remove('paused'); // resumes CSS animations
+  start();                                   // resumes spawning
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    pauseVisuals();
+  } else {
+    resumeVisuals();
+  }
+});
+
+// (Optional) Better lifecycle on Safari / bfcache
+window.addEventListener('pagehide', pauseVisuals);
+window.addEventListener('pageshow', resumeVisuals);
