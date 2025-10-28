@@ -8,7 +8,6 @@ body, html {
   overflow: hidden;
   background: radial-gradient(at center bottom,var(--sky-base),transparent),
               linear-gradient(to bottom, var(--sky-color), var(--sky-base) 80%);
-
   height: 100vh;
   width: 100vw;
   perspective: 1000px;
@@ -34,10 +33,10 @@ body, html {
 
   /* Per-cloud custom properties (overridden in JS) */
   --top: 40%;               
-  --left: 0px;              
+  --left: 0%;              
   --z-start: -1500px;       
   --z-end: 200px;           
-  --drift-x: 0px;           
+  --drift-x: 0%;           
   --duration: 14s;          
   --delay: 0s;              
   --opacity-peak: 0.8;
