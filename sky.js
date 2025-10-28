@@ -22,8 +22,8 @@ function spawnCloud(initial = false) {
   cloud.style.setProperty('--z-start', `${zStart}px`);
 
   // Slight drift across flight so paths aren't dead straight
-  const driftX = (Math.random() - 0.5) * 400; 
-  cloud.style.setProperty('--drift-x', `${driftX}px`);
+  const driftXPct = (Math.random() - 0.5) * 20; 
+  cloud.style.setProperty('--drift-x', `${driftXPct}%`);
 
   // Duration scales a bit with depth so farther clouds take longer
   const baseDuration = 12;              // seconds
