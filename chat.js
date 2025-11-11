@@ -6,7 +6,7 @@ const appEl = document.querySelector('.app');
 
 const SETTINGS = {
 	streaming: true,
-	persist: true,
+	persist: false,
 	typingDelayMsPerChar: 4,
 	maxHistory: 200
 };
@@ -152,13 +152,6 @@ inputEl.addEventListener('keydown', (e) => {
 inputEl.addEventListener('input', () => {
 	inputEl.style.height = 'auto';
 	inputEl.style.height = Math.min(inputEl.scrollHeight, window.innerHeight * 0.34) + 'px';
-});
-
-clearBtn.addEventListener('click', () => {
-	if (!confirm('Clear the chat?')) return;
-	messages = [];
-	save();
-	render();
 });
 
 
