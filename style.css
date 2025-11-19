@@ -15,4 +15,4 @@ body {height: 100vh;overflow: hidden; margin: 0; color: var(--text); font: 16px/
 video {position: fixed;top: 0;left: 0;width: 100%;height: 100%;object-fit: cover;z-index: -1; } 
 .selector {position: absolute;top: 20px;right: 20px;background: rgba(0, 0, 0, 0.5);color: #fff;padding: 10px;border-radius: 5px; } 
 .selector select {background: transparent;color: #fff;border: none;font-size: 16px; } 
-.header {display: flex;display: flex;align-items: center;justify-content:center; } 
+.header {display: flex;display: flex;align-items: center;justify-content:center;} 
