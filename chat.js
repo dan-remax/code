@@ -84,7 +84,7 @@ function generateDummyResponse(userText) {
 		`Great question! If we break it down:\n• Point 1\n• Point 2\n• Point 3\n\nLet me know where to go deeper. Thus concludes the sample response`,
 		`Quick summary: [placeholder]\n\nDetails: This is a mock reply. Soluta possimus asperiores. Assumenda facilis rerum sunt debitis natus perspiciatis. Dicta aut rem inventore quia velit officiis quia. Nulla iusto nihil omnis dolores et illum eos dolore. Ex quas harum autem libero illum. Dignissimos rerum quo officiis. Sapiente adipisci veritatis non consequatur doloribus. Omnis nihil dolores odit sapiente doloremque. Ut facere sunt recusandae saepe nisi perferendis doloremque porro. Ad ut amet. Voluptatem excepturi sunt omnis excepturi cumque voluptates. Quis laborum laborum ea ducimus nemo tenetur aut. Fugit autem quia reiciendis inventore. Consequatur sint quaerat. Omnis quisquam et vel quis perspiciatis provident perspiciatis et.`,
 		`Here's a sample short answer.`,
-		`Thanks for the message! This is not the actual pypestream embed. It's a sample for design`
+		`Thanks for the message! This is not the actual pypestream embed. It's a sample for design iteration`
 	];
 	return templates[Math.floor(Math.random() * templates.length)];
 }

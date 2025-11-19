@@ -3,7 +3,7 @@
 * { box-sizing: border-box; } 
 
 
-.app { display: grid; grid-template-rows: 1fr auto; height: 100%; width: 800px; margin: 0 auto; gap: 32px; padding-bottom: 4rem; } 
+.app { display: grid; grid-template-rows: 1fr auto; height: 100%; width: 800px; margin: 0 auto; gap: 32px;} 
 
 /* Center composer when chat is empty */
 .app.centered {grid-template-rows: 1fr auto; /* let the composer sit near center */ } 
