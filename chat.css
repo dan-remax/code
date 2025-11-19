@@ -2,7 +2,7 @@
 
 * { box-sizing: border-box; } 
 
-.fine-print p, .fine-print a{color:white; font-size: 12px;}
+
 .app { display: grid; grid-template-rows: 1fr auto; height: 100%; width: 800px; margin: 0 auto; gap: 32px; padding-bottom: 4rem; } 
 
 /* Center composer when chat is empty */
